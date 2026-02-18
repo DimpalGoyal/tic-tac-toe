@@ -1,20 +1,30 @@
 let currentPlayer = "X"
 let array = Array(9).fill(null)
 
-function handleWinner(){
-    if(
-        (array[0] != null && array[0] == array[1] && array[1] == array[2]) ||
-        (array[3] != null && array[3] == array[4] && array[4] == array[5]) ||
-        (array[6] != null && array[6] == array[7] && array[7] == array[8]) ||
-        (array[0] != null && array[0] == array[3] && array[3] == array[6]) ||
-        (array[1] != null && array[1] == array[4] && array[4] == array[7]) ||
-        (array[2] != null && array[2] == array[5] && array[5] == array[8]) ||
-        (array[0] != null && array[0] == array[4] && array[4] == array[8]) ||
-        (array[2] != null && array[2] == array[4] && array[4] == array[6])
-    ){
-        document.write(`winner is ${currentPlayer}`)
+function handleWinner() {
+    // All possible winning combinations (rows, columns, diagonals)
+    const winningCombinations = [
+        [0, 1, 2], // top row
+        [3, 4, 5], // middle row
+        [6, 7, 8], // bottom row
+        [0, 3, 6], // left column
+        [1, 4, 7], // middle column
+        [2, 5, 8], // right column
+        [0, 4, 8], // diagonal top-left to bottom-right
+        [2, 4, 6]  // diagonal top-right to bottom-left
+    ];
+
+    // Check each winning combination
+    for (const combination of winningCombinations) {
+        const [a, b, c] = combination;
+        if (array[a] !== null && array[a] === array[b] && array[b] === array[c]) {
+            document.write(`winner is ${array[a]}`);
+            return;
+        }
     }
-    if(!array.some((e) => e === null)){
+
+    // Check for draw (all cells filled, no winner)
+    if (!array.some((e) => e === null)) {
         document.write(`draw`);
         return;
     }
@@ -22,11 +32,11 @@ function handleWinner(){
 
 function handleClick(el) {
     const id = Number(el.id);
-    if( array[id] != null){
+    if (array[id] != null) {
         return;
     }
     array[id] = currentPlayer;
-    el.innerText = currentPlayer;   
+    el.innerText = currentPlayer;
     handleWinner()
     currentPlayer = currentPlayer === "X" ? "O" : "X"
     console.log(id);
