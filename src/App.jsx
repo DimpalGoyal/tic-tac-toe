@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import './App.css';
 
+/**
+ * Render the Tic Tac Toe application with an interactive 3x3 board, turn management, win/draw detection, and a reset control.
+ *
+ * Manages local state for the board, current player, and game status; handles cell clicks to place marks, detects a winner or draw, switches turns, and shows a "Play Again" button when the game ends.
+ *
+ * @returns {JSX.Element} The rendered Tic Tac Toe application.
+ */
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [currentPlayer, setCurrentPlayer] = useState('X');
